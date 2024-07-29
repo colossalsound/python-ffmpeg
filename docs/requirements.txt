@@ -1,3 +1,6 @@
-mkdocs==1.4.2
-mkdocstrings[python]>=0.18
-mkdocs-material==9.0.6
+black
+griffe-generics
+griffe-modernized-annotations
+mkdocs
+mkdocs-material
+mkdocstrings[python]
