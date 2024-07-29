@@ -7,7 +7,7 @@ import signal
 import subprocess
 from typing import Optional, Union
 
-from pyee.asyncio import AsyncIOEventEmitter
+from eventemitter import AsyncIOEventEmitter
 from typing_extensions import Self
 
 from ffmpeg import types
@@ -35,8 +35,6 @@ class FFmpeg(AsyncIOEventEmitter):
         self._terminated: bool = False
 
         self._tracker = Tracker(self)  # type: ignore
-
-        self.once("error", self._reraise_exception)
 
     @property
     def arguments(self) -> list[str]:
@@ -172,7 +170,7 @@ class FFmpeg(AsyncIOEventEmitter):
         if stream is not None:
             stream = ensure_stream_reader(stream)
 
-        self.emit("start", self.arguments)
+        await self.emit("start", self.arguments)
 
         self._process = await create_subprocess(
             *self.arguments,
@@ -201,9 +199,9 @@ class FFmpeg(AsyncIOEventEmitter):
                 raise exception
 
         if self._process.returncode == 0:
-            self.emit("completed")
+            await self.emit("completed")
         elif self._terminated:
-            self.emit("terminated")
+            await self.emit("terminated")
         else:
             raise FFmpegError.create(message=tasks[2].result(), arguments=self.arguments)
 
@@ -257,9 +255,6 @@ class FFmpeg(AsyncIOEventEmitter):
 
         line = b""
         async for line in readlines(self._process.stderr):
-            self.emit("stderr", line.decode())
+            await self.emit("stderr", line.decode())
 
         return line.decode()
-
-    def _reraise_exception(self, exception: Exception):
-        raise exception
