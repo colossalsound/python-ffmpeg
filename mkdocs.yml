@@ -21,14 +21,16 @@ nav:
 
 theme:
   name: material
+  palette:
+    primary: material
   icon:
     logo: fontawesome/solid/video
-    repo: fontawesome/brands/github
+    repo: simple/github
   features:
     - content.code.annotate
 
 extra_css:
-  - stylesheets/extra.css
+  - extra/stylesheet.css
 
 markdown_extensions:
   - admonition
@@ -41,16 +43,32 @@ markdown_extensions:
 
 plugins:
   - search
-  - autorefs
   - mkdocstrings:
       handlers:
         python:
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://typing-extensions.readthedocs.io/en/latest/objects.inv
           options:
-            show_root_toc_entry: false
-            members_order: source
-            group_by_category: false
-            show_bases: true
+            # general
+            show_bases: false
             show_source: true
+            # headings
+            show_root_heading: true
+            show_root_full_path: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            # members
+            inherited_members: true
+            members_order: source
+            # signatures
+            show_signature: true
+            show_signature_annotations: true
+            separate_signature: true
+            signature_crossrefs: true
+            extensions:
+              - griffe_modernized_annotations
+              - griffe_generics
 
 watch:
   - ffmpeg
