@@ -7,7 +7,7 @@ import signal
 import subprocess
 from typing import IO, Optional, Union
 
-from pyee import EventEmitter
+from eventemitter import EventEmitter
 from typing_extensions import Self
 
 from ffmpeg import types
