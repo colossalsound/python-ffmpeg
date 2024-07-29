@@ -1,1 +1,1 @@
-from .ffmpeg import FFmpeg
+from ffmpeg.asyncio.ffmpeg import FFmpeg
