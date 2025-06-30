@@ -24,4 +24,4 @@ async def test_asyncio_timeout(
     )
 
     with pytest.raises(asyncio.TimeoutError):
-        await ffmpeg.execute(timeout=0.1)
+        await ffmpeg.execute(timeout=0.01)

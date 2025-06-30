@@ -23,4 +23,4 @@ def test_transcoding(
     )
 
     with pytest.raises(subprocess.TimeoutExpired):
-        ffmpeg.execute(timeout=0.1)
+        ffmpeg.execute(timeout=0.01)
